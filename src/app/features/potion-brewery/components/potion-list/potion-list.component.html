@@ -32,7 +32,7 @@
         <ng-template pTemplate="body" let-potion let-expanded="expanded">
           <tr>
             <td>
-              <p-button type="button" pRipple [pRowToggler]="potion" [text]="true" severity="secondary" [rounded]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+              <p-button type="button" [pRowToggler]="potion" [text]="true" severity="secondary" [rounded]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
             </td>
             <td class="truncate">{{ potion.potionNumber }}</td>
             <td class="truncate">{{ potion.whoOrdered }}</td>
