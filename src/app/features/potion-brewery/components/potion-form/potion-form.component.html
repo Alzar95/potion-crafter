@@ -16,15 +16,13 @@
           </p-floatlabel>
 
           <p-floatlabel class="w-full" variant="on">
-            <p-select [options]="arrayDeliveryMethod" formControlName="deliveryMethod"
-                      inputId="delivery-method" styleClass="w-full"/>
-            <label for="delivery-method">Способ доставки</label>
+            <p-select [options]="arrayDeliveryMethod" formControlName="deliveryMethod" styleClass="w-full"/>
+            <label>Способ доставки</label>
           </p-floatlabel>
 
           <p-iftalabel>
-            <p-datepicker formControlName="orderDate" inputId="order-date" appendTo="body"
-                          showIcon iconDisplay="input" fluid/>
-            <label for="order-date">Дата заказа</label>
+            <p-datepicker formControlName="orderDate" appendTo="body" showIcon iconDisplay="input" fluid/>
+            <label>Дата заказа</label>
           </p-iftalabel>
         </div>
 
@@ -36,15 +34,14 @@
           </p-floatlabel>
 
           <p-floatlabel class="w-full" variant="on">
-            <p-select [options]="arrayPaymentMethod" formControlName="paymentMethod"
-                      inputId="payment-method" styleClass="w-full"/>
-            <label for="payment-method">Способ оплаты</label>
+            <p-select [options]="arrayPaymentMethod" formControlName="paymentMethod" styleClass="w-full"/>
+            <label>Способ оплаты</label>
           </p-floatlabel>
 
           <p-iftalabel>
-            <p-datepicker formControlName="readinessDate" inputId="readiness-date" appendTo="body"
+            <p-datepicker formControlName="readinessDate" appendTo="body"
                           showIcon iconDisplay="input" fluid/>
-            <label for="readiness-date">Дата готовности</label>
+            <label>Дата готовности</label>
           </p-iftalabel>
         </div>
       </div>

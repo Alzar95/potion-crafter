@@ -119,7 +119,7 @@ export class IngredientsEditorComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  private onChange = (val: any) => {
+  private onChange = (_: any) => {
   };
   private onTouched = () => {
   };
