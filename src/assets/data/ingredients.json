@@ -1,0 +1,74 @@
+{
+  "ingredients": [
+    {
+      "id": 1,
+      "name": "Агератум",
+      "pricePerUnit": 50
+    },
+    {
+      "id": 2,
+      "name": "Алмазный порошок",
+      "pricePerUnit": 300
+    },
+    {
+      "id": 3,
+      "name": "Белая слива",
+      "pricePerUnit": 100
+    },
+    {
+      "id": 4,
+      "name": "Водный каштан",
+      "pricePerUnit": 150
+    },
+    {
+      "id": 5,
+      "name": "Глаз рыбы",
+      "pricePerUnit": 250
+    },
+    {
+      "id": 6,
+      "name": "Жасминный апельсин",
+      "pricePerUnit": 500
+    },
+    {
+      "id": 7,
+      "name": "Жук Девяти ароматов",
+      "pricePerUnit": 800
+    },
+    {
+      "id": 8,
+      "name": "Молочай",
+      "pricePerUnit": 350
+    },
+    {
+      "id": 9,
+      "name": "Морская звезда",
+      "pricePerUnit": 450
+    },
+    {
+      "id": 10,
+      "name": "Мышьяк",
+      "pricePerUnit": 150
+    },
+    {
+      "id": 11,
+      "name": "Пьянящая роса бессмертия",
+      "pricePerUnit": 900
+    },
+    {
+      "id": 12,
+      "name": "Слеза феникса",
+      "pricePerUnit": 1000
+    },
+    {
+      "id": 13,
+      "name": "Трава Призраков",
+      "pricePerUnit": 550
+    },
+    {
+      "id": 14,
+      "name": "Черепаший панцирь",
+      "pricePerUnit": 350
+    }
+  ]
+}

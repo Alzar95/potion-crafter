@@ -1,0 +1,155 @@
+<div class="potion-list p-4">
+  <h2 class="text-xl font-bold mb-4 text-surface-900">
+    Приготовленные зелья
+    <span class="bg-primary-100 text-primary-800 text-sm font-medium px-2.5 py-0.5 rounded-full ml-2">
+      {{ potions.length }}
+    </span>
+  </h2>
+
+  @if (potions.length === 0) {
+    <div class="text-center py-10 border-2 border-dashed border-gray-300 rounded-lg">
+      <i class="pi pi-flask text-4xl text-gray-400 mb-4"></i>
+      <p class="text-gray-500">Здесь пока нет зелий. Сварите первое!</p>
+    </div>
+  }
+
+  @if (potions.length > 0) {
+    <div class="hidden md:block">
+      <p-table [value]="potions" dataKey="id" [paginator]="potions.length > 10" [rows]="10" [tableStyle]="{'table-layout': 'fixed', 'width': '100%'}">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 5%"></th>
+            <th style="width: 10%">№ зелья</th>
+            <th style="width: 20%">Заказчик</th>
+            <th style="width: 15%">Дата заказа</th>
+            <th class="hidden lg:table-cell" style="width: 15%">Срок готовности</th>
+            <th style="width: 15%">Способ доставки</th>
+            <th style="width: 10%">Общая стоимость</th>
+            <th style="width: 10%">Действия</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-potion let-expanded="expanded">
+          <tr>
+            <td>
+              <p-button type="button" pRipple [pRowToggler]="potion" [text]="true" severity="secondary" [rounded]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+            </td>
+            <td class="truncate">{{ potion.potionNumber }}</td>
+            <td class="truncate">{{ potion.whoOrdered }}</td>
+            <td class="truncate">{{ potion.orderDate | date:'dd.MM.yyyy' }}</td>
+            <td class="truncate hidden lg:table-cell">{{ potion.readinessDate | date:'dd.MM.yyyy' }}</td>
+            <td class="truncate">{{ potion.deliveryMethod }}</td>
+            <td class="truncate">{{ potion.totalCost | currency }}</td>
+            <td>
+              <p-button class="lg:block md:hidden" label="Удалить" severity="danger"
+                        (click)="confirmRemovePotion(potion.id)"/>
+              <p-button
+                class="lg:hidden md:block"
+                icon="pi pi-trash"
+                severity="danger"
+                size="small"
+                [pTooltip]="'Удалить'"
+                (click)="confirmRemovePotion(potion.id)"/>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #expandedrow let-potion>
+          <tr>
+            <td colspan="7">
+              <div class="p-4">
+                <h5 class="italic">Рецепт приготовления</h5>
+                <p-table [value]="potion.ingredients" dataKey="id" [tableStyle]="{'table-layout': 'fixed', 'width': '100%'}">
+                  <ng-template #header>
+                    <tr>
+                      <th>
+                        <div class="flex items-center gap-2">
+                          Ингредиент
+                        </div>
+                      </th>
+                      <th>
+                        <div class="flex items-center gap-2">
+                          Количество
+                        </div>
+                      </th>
+                      <th>
+                        <div class="flex items-center gap-2">
+                          Цена за ед.
+                        </div>
+                      </th>
+                      <th>
+                        <div class="flex items-center gap-2">
+                          Сумма
+                        </div>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template #body let-ingredient>
+                    <tr>
+                      <td>{{ ingredient.ingredient?.name }}</td>
+                      <td>{{ ingredient.count }}</td>
+                      <td>{{ ingredient.ingredient?.pricePerUnit | currency }}</td>
+                      <td class="truncate">{{ ingredient.totalPrice | currency }}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="md:hidden">
+      <p-dataview #dv [value]="potions" layout="list">
+        <ng-template #list let-potions>
+          <div class="grid grid-cols-1 gap-4">
+            @for (potion of potions; track potion.id) {
+              <div class="card border-round-lg shadow-sm p-4 bg-surface">
+                <div class="flex-column gap-3">
+                  <div class="justify-between items-center">
+                    <span class="font-bold text-lg">Зелье №{{ potion.potionNumber }}</span>
+                    <span class="font-bold text-primary">{{ potion.totalCost | currency }}</span>
+                  </div>
+
+                  <div class="flex-column gap-2 text-sm">
+                    <div class="flex">
+                      <span class="w-32 text-gray-500">Заказчик:</span>
+                      <span class="font-medium">{{ potion.whoOrdered }}</span>
+                    </div>
+                    <div class="flex">
+                      <span class="w-32 text-gray-500">Заказано:</span>
+                      <span>{{ potion.orderDate | date:'dd.MM.yyyy' }}</span>
+                    </div>
+                    <div class="flex">
+                      <span class="w-32 text-gray-500">Готово к:</span>
+                      <span>{{ potion.readinessDate | date:'dd.MM.yyyy' }}</span>
+                    </div>
+                    <div class="flex">
+                      <span class="w-32 text-gray-500">Доставка:</span>
+                      <span>{{ potion.deliveryMethod }}</span>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-between items-center mt-2">
+                    <small class="text-gray-500">
+                      Ингредиентов: {{ potion.ingredients?.length || 0 }}
+                    </small>
+                    <p-button
+                      icon="pi pi-trash"
+                      severity="danger"
+                      size="small"
+                      [pTooltip]="'Удалить'"
+                      (click)="confirmRemovePotion(potion.id)"/>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </ng-template>
+      </p-dataview>
+    </div>
+  }
+
+  <p-confirmDialog/>
+  <p-toast/>
+</div>

@@ -1,0 +1,88 @@
+<div class="card flex justify-center">
+  <p-button (click)="showDialog()" label="Приготовить зелье!"/>
+  <p-dialog header="Варим зелье!" [modal]="true" [(visible)]="visible" [style]="{ width: '70%', height: '79%' }">
+    <form [formGroup]="potionForm" class="p-2 flex flex-col gap-4" (ngSubmit)="brewAPotion()">
+      <div class="w-full flex gap-4" [class.flex-col]="isMobile()">
+        <div class="w-1/2 flex flex-col gap-3" [class.w-full]="isMobile()">
+          <p-floatlabel class="w-full" variant="on">
+            <input pInputText id="potion-number" type="number" formControlName="potionNumber"
+                   autocomplete="off" class="w-full"/>
+            <label for="potion-number">Номер зелья</label>
+            @if (potionForm.get('potionNumber')?.errors?.['duplicatePotionNumber']) {
+              <small class="text-red-500">
+                Зелье с таким номером уже существует
+              </small>
+            }
+          </p-floatlabel>
+
+          <p-floatlabel class="w-full" variant="on">
+            <p-select [options]="arrayDeliveryMethod" formControlName="deliveryMethod"
+                      inputId="delivery-method" styleClass="w-full"/>
+            <label for="delivery-method">Способ доставки</label>
+          </p-floatlabel>
+
+          <p-iftalabel>
+            <p-datepicker formControlName="orderDate" inputId="order-date" appendTo="body"
+                          showIcon iconDisplay="input" fluid/>
+            <label for="order-date">Дата заказа</label>
+          </p-iftalabel>
+        </div>
+
+        <div class="w-1/2 flex flex-col gap-3" [class.w-full]="isMobile()">
+          <p-floatlabel class="w-full" variant="on">
+            <input pInputText id="who-ordered" formControlName="whoOrdered"
+                   autocomplete="off" class="w-full"/>
+            <label for="who-ordered">Кто зелье заказал</label>
+          </p-floatlabel>
+
+          <p-floatlabel class="w-full" variant="on">
+            <p-select [options]="arrayPaymentMethod" formControlName="paymentMethod"
+                      inputId="payment-method" styleClass="w-full"/>
+            <label for="payment-method">Способ оплаты</label>
+          </p-floatlabel>
+
+          <p-iftalabel>
+            <p-datepicker formControlName="readinessDate" inputId="readiness-date" appendTo="body"
+                          showIcon iconDisplay="input" fluid/>
+            <label for="readiness-date">Дата готовности</label>
+          </p-iftalabel>
+        </div>
+      </div>
+
+      <p-floatlabel class="w-full" variant="on">
+        <input pInputText id="delivery-address" formControlName="deliveryAddress"
+               autocomplete="off" class="w-full"/>
+        <label for="delivery-address">Адрес доставки</label>
+      </p-floatlabel>
+
+      <app-ingredients-editor formControlName="selectedIngredients"></app-ingredients-editor>
+
+      @if (potionForm.get('selectedIngredients')?.errors) {
+        <small class="text-red-500 block mt-2">
+          @if (potionForm.get('selectedIngredients')?.errors?.['required']) {
+            <span>Добавьте хотя бы один ингредиент</span>
+          }
+          @if (potionForm.get('selectedIngredients')?.errors?.['minIngredients']) {
+            <span>
+        Нужно минимум {{ potionForm.get('selectedIngredients')?.errors?.['minIngredients'].requiredLength }}
+              разных ингредиента (сейчас {{ potionForm.get('selectedIngredients')?.errors?.['minIngredients'].actualLength }}
+              )
+      </span>
+          }
+        </small>
+      }
+
+      <div class="flex justify-between items-center mt-4">
+        @if (!isMobile()) {
+          <span class="italic">*Необходимо как минимум 3 ингредиента!</span>
+        }
+        <div class="flex items-center gap-2">
+          <p-button [class.w-full]="isMobile()" label="Отмена" severity="secondary" (click)="visible = false"/>
+          <p-button [class.w-full]="isMobile()" [disabled]="!potionForm.valid" label="Вуншпунш!" type="submit"/>
+        </div>
+      </div>
+    </form>
+  </p-dialog>
+
+  <p-toast/>
+</div>
